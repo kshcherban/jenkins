@@ -1,0 +1,16 @@
+github
+ghprb
+git
+job-dsl
+ssh-slaves
+email-ext:2.57
+envinject
+antisamy-markup-formatter
+ansicolor
+build-name-setter
+timestamper
+modernstatus
+parameterized-trigger
+rebuild
+ssh
+postbuild-task

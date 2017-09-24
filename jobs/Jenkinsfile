@@ -1,0 +1,59 @@
+pipeline {
+
+    agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        timestamps()
+        ansiColor('xterm')
+    }
+
+    environment {
+        TEST = "some test"
+    }
+
+    stages {
+
+        stage('Build') {
+            steps {
+                script {
+                    env.app_name = "${app}".replace("-service", "")
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} - ${app}"
+                }
+
+                sh('''#!/bin/bash
+echo \$TEST
+
+echo "docker build --pull --force-rm --build-arg app=${app} --build-arg app_name=\$app_name -t \${app_name}:latest ."
+''')
+            }
+        }
+
+
+        stage('Deploy') {
+            steps {
+                sh('''#!/bin/bash
+echo "terraform apply"
+''')
+            }
+        }
+    }
+
+    post {
+        failure {
+            script {
+                env.logs = currentBuild.rawBuild.getLog(50).join('\n')
+            }
+            emailext (
+                subject: "FAILURE: ${env.JOB_NAME} Build # ${env.BUILD_NUMBER} ",
+                body: """FAILED: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]':
+Check console output at ${env.BUILD_URL}console
+
+...
+${env.logs}
+""",
+                to: 'test@example.com'
+            )
+        }
+    }
+}
