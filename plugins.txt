@@ -14,3 +14,4 @@ parameterized-trigger
 rebuild
 ssh
 postbuild-task
+workflow-aggregator

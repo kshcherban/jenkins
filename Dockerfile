@@ -8,5 +8,6 @@ ADD seed-job/ /usr/share/jenkins/ref/jobs/_seed-job
 ENV ADMIN_USERNAME admin
 ENV DEFAULT_ADMIN_PASSWORD admin
 ENV ADMIN_PASSWORD $DEFAULT_ADMIN_PASSWORD
+ENV JAVA_OPTS="-Dpermissive-script-security.enabled=true"
 
 COPY init_scripts/*.groovy  /usr/share/jenkins/ref/init.groovy.d/

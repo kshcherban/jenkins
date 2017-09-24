@@ -34,6 +34,7 @@
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl">
       <targets>jobs/**/*.groovy</targets>
+      <sandbox>true</sandbox>
       <usingScriptText>false</usingScriptText>
       <ignoreExisting>false</ignoreExisting>
       <removedJobAction>DELETE</removedJobAction>
